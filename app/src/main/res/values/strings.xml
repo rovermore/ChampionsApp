@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">ChampionsApp</string>
+    <string name="error_string">Error al recuperar los datos</string>
+    <string name="error_database">No se encontraron equipos guardados</string>
+    <string name="reload">Reload</string>
+    <string name="save_button">GUARDAR</string>
+    <string name="cancel_button">CANCELAR</string>
+    <string name="naming_message">Pon un nombre a tu equipo</string>
+</resources>
