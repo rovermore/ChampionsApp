@@ -1,5 +1,6 @@
 package com.example.championsapp.screen.main
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -7,7 +8,6 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.NavHostFragment
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.championsapp.ChampionsApp
@@ -24,12 +24,21 @@ class MainFragment : Fragment(){
     @Inject
     lateinit var mainViewModel: MainViewModel
 
+    private lateinit var mContext: Context
+
     private var _binding: FragmentMainBinding? = null
     private val binding get() = _binding!!
 
     private lateinit var recyclerView: RecyclerView
-    private var adapter = MainAdapter(null)
+    private lateinit var adapter: MainAdapter
     private lateinit var layoutManager: LinearLayoutManager
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        super.onAttach(requireActivity())
+        mContext = context
+        adapter = MainAdapter(null, mContext)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

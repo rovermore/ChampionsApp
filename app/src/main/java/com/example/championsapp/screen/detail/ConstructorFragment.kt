@@ -31,21 +31,8 @@ class ConstructorFragment : Fragment(), BoardAdapter.OnItemClicked {
     private var _binding: FragmentConstructorBinding? = null
     private val binding get() = _binding!!
 
-    private val initialBoardList = mutableListOf<Champion>(
-        Champion("a"),
-        Champion("a"),
-        Champion("a"),
-        Champion("a"),
-        Champion("a"),
-        Champion("a"),
-        Champion("a"),
-        Champion("a"),
-        Champion("a"),
-        Champion("a")
-    )
-
     private lateinit var recyclerView: RecyclerView
-    private var adapter = BoardAdapter(initialBoardList, this)
+    private var adapter = BoardAdapter(ConstructorViewModel.inflateInnerPlaceHolderInnerBoardList(), this)
     private lateinit var layoutManager: GridLayoutManager
 
     override fun onCreateView(
@@ -175,6 +162,7 @@ class ConstructorFragment : Fragment(), BoardAdapter.OnItemClicked {
     }
 
     private fun returnToMainFragment() {
+        constructorViewModel.clearInnerList()
         NavHostFragment.findNavController(this).navigate(R.id.action_ConstructorFragment_to_MainFragment)
 
     }

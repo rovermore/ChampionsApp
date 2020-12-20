@@ -7,6 +7,7 @@ import kotlin.collections.ArrayList
 
 class ChampionConverter {
 
+    @ExperimentalStdlibApi
     @TypeConverter
     fun storedStringToChampionList(value: String): List<Champion> {
         val stringList = (value.split(",").toTypedArray())
@@ -14,6 +15,7 @@ class ChampionConverter {
         for (string in stringList) {
             championList.add(Champion(string))
         }
+        championList.removeLast()
         return championList
     }
 

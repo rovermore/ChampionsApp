@@ -29,7 +29,7 @@ class BoardAdapter(var championList: MutableList<Champion>,
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         if(!championList.isNullOrEmpty()) {
-            holder.bindView(championList!![position])
+            holder.bindView(championList[position])
         }
     }
 

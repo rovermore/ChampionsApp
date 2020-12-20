@@ -19,18 +19,18 @@ class ConstructorViewModel
                         private val saveChampionTeamUseCase: SaveChampionTeamUseCase
     ) : ViewModel() {
 
-    private val innerBoardList = mutableListOf<Champion>(
-        Champion("a"),
-        Champion("a"),
-        Champion("a"),
-        Champion("a"),
-        Champion("a"),
-        Champion("a"),
-        Champion("a"),
-        Champion("a"),
-        Champion("a"),
-        Champion("a")
-    )
+    companion object {
+        private val innerBoardList = mutableListOf<Champion>()
+
+        private fun createPlaceholderChampion() = Champion("a")
+
+        fun inflateInnerPlaceHolderInnerBoardList(): MutableList<Champion> {
+            for (n in 0..9) {
+                innerBoardList.add(createPlaceholderChampion())
+            }
+            return innerBoardList
+        }
+    }
 
     private var _boardList =
         MutableLiveData<MutableList<Champion>>()
@@ -85,20 +85,18 @@ class ConstructorViewModel
     }
 
     fun addChampion(champion: Champion) {
-        if (innerBoardList.size == 10) {
-            val replaceChampion = innerBoardList.firstOrNull { it.image == "a" }
+        val replaceChampion = innerBoardList.firstOrNull { it.image == "a" }
+        if (replaceChampion != null) {
             innerBoardList.remove(replaceChampion)
             innerBoardList.add(champion)
             _boardList.value = innerBoardList
         }
-
     }
 
     fun deleteChampion(position: Int) {
         innerBoardList.removeAt(position)
-        innerBoardList.add(Champion("a"))
+        innerBoardList.add(createPlaceholderChampion())
         _boardList.value = innerBoardList
-
     }
 
     fun saveChampionTeam(name: String) {
@@ -106,4 +104,9 @@ class ConstructorViewModel
             saveChampionTeamUseCase.requestWithParameter(ChampionTeam(null, innerBoardList, name))
         }
     }
+
+    fun clearInnerList() {
+        innerBoardList.clear()
+    }
+
 }

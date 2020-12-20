@@ -1,15 +1,20 @@
 package com.example.championsapp.screen.main
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.championsapp.R
 import com.example.championsapp.databinding.TeamItemBinding
+import com.example.championsapp.model.Champion
 import com.example.championsapp.model.ChampionTeam
-import com.squareup.picasso.Picasso
+import com.example.championsapp.screen.detail.BoardAdapter
 
-class MainAdapter (var championTeamList: MutableList<ChampionTeam>?) : RecyclerView.Adapter<MainAdapter.MyViewHolder>() {
+class MainAdapter (var championTeamList: MutableList<ChampionTeam>?,
+                   val context: Context
+) : RecyclerView.Adapter<MainAdapter.MyViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.team_item, parent, false)
@@ -42,94 +47,22 @@ class MainAdapter (var championTeamList: MutableList<ChampionTeam>?) : RecyclerV
         }
     }
 
-    inner class MyViewHolder(view: View) : RecyclerView.ViewHolder(view)  {
+    inner class MyViewHolder(view: View) : RecyclerView.ViewHolder(view), BoardAdapter.OnItemClicked  {
 
         private val binding  = TeamItemBinding.bind(view)
 
         fun bindView(championTeam: ChampionTeam) {
-            binding.apply {
-                championTeam.championList[0].image?.apply {
-                    Picasso.with(binding.root.context)
-                        .load(this)
-                        .error(R.drawable.ic_baseline_person_24)
-                        .placeholder(R.drawable.ic_baseline_person_24)
-                        .into(championImageView1)
+                val recyclerView = binding.championRowRecycler
+                recyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL,false)
+                recyclerView.setHasFixedSize(true)
+                recyclerView.adapter = BoardAdapter(championTeam.championList as MutableList<Champion>, this)
 
-                }
-                championTeam.championList[1].image?.apply {
-                    Picasso.with(binding.root.context)
-                        .load(this)
-                        .error(R.drawable.ic_baseline_person_24)
-                        .placeholder(R.drawable.ic_baseline_person_24)
-                        .into(championImageView2)
+                binding.teamNameTextView.text = championTeam.teamName
 
-                }
-                championTeam.championList[2].image?.apply {
-                    Picasso.with(binding.root.context)
-                        .load(this)
-                        .error(R.drawable.ic_baseline_person_24)
-                        .placeholder(R.drawable.ic_baseline_person_24)
-                        .into(championImageView3)
+        }
 
-                }
-                championTeam.championList[3].image?.apply {
-                    Picasso.with(binding.root.context)
-                        .load(this)
-                        .error(R.drawable.ic_baseline_person_24)
-                        .placeholder(R.drawable.ic_baseline_person_24)
-                        .into(championImageView4)
-
-                }
-                championTeam.championList[4].image?.apply {
-                    Picasso.with(binding.root.context)
-                        .load(this)
-                        .error(R.drawable.ic_baseline_person_24)
-                        .placeholder(R.drawable.ic_baseline_person_24)
-                        .into(championImageView5)
-
-                }
-                championTeam.championList[5].image?.apply {
-                    Picasso.with(binding.root.context)
-                        .load(this)
-                        .error(R.drawable.ic_baseline_person_24)
-                        .placeholder(R.drawable.ic_baseline_person_24)
-                        .into(championImageView6)
-
-                }
-                championTeam.championList[6].image?.apply {
-                    Picasso.with(binding.root.context)
-                        .load(this)
-                        .error(R.drawable.ic_baseline_person_24)
-                        .placeholder(R.drawable.ic_baseline_person_24)
-                        .into(championImageView7)
-
-                }
-                championTeam.championList[7].image?.apply {
-                    Picasso.with(binding.root.context)
-                        .load(this)
-                        .error(R.drawable.ic_baseline_person_24)
-                        .placeholder(R.drawable.ic_baseline_person_24)
-                        .into(championImageView8)
-
-                }
-                championTeam.championList[8].image?.apply {
-                    Picasso.with(binding.root.context)
-                        .load(this)
-                        .error(R.drawable.ic_baseline_person_24)
-                        .placeholder(R.drawable.ic_baseline_person_24)
-                        .into(championImageView9)
-
-                }
-                championTeam.championList[9].image?.apply {
-                    Picasso.with(binding.root.context)
-                        .load(this)
-                        .error(R.drawable.ic_baseline_person_24)
-                        .placeholder(R.drawable.ic_baseline_person_24)
-                        .into(championImageView10)
-
-                }
-                teamNameTextView.text = championTeam.teamName
-            }
+        override fun itemClicked(champion: Champion, position: Int) {
+            TODO("Not yet implemented")
         }
     }
 }
