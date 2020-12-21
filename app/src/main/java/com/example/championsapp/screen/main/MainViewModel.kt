@@ -7,7 +7,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.championsapp.model.ChampionTeam
 import com.example.championsapp.usecase.GetChampionTeamFromDBUseCase
-import com.example.championsapp.utils.NetworkConnection
 import com.example.championsapp.utils.ScreenState
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -37,12 +36,6 @@ class MainViewModel
     private fun observeResponse() {
         viewModelScope.launch {
             uiModel = getChampionTeamFromDBUseCase.request()
-        }
-    }
-
-    private fun displayError() {
-        viewModelScope.launch {
-            _uiState.setValue(ScreenState.Error)
         }
     }
 }
